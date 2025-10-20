@@ -1,4 +1,5 @@
 const express = require ('express');
+const cors = require('cors');
 require('dotenv').config();
 
 const db = require('./db-connection');
@@ -7,7 +8,14 @@ const mainRouter = require('./routes/routes.index');
 const app= express();
 const PORT = process.env.PORT || 5000;
 
-app.use(express.json()); // Middleware - Express now "unsderstands" JSON
+
+
+// Middleware
+app.use(cors()); // Enable CORS
+app.use(express.json()); // Middleware - Express now "understands" JSON
+
+
+// Rutas
 app.use('/api', mainRouter);
 
 

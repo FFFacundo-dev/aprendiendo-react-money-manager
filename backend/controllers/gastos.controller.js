@@ -12,7 +12,7 @@ exports.crearGasto = async (req, res) => {
       VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *;
     `;
-    const values = [idUsuario, titulo, monto, descripcion, categoria, estado];
+    const values = [idUsuario, titulo, monto, descripcion, categoria, estado ? estado : 'registrado'];
     const { rows } = await db.query(query, values);
     res.status(201).json({ message: 'Gasto creado exitosamente', gasto: rows[0] });
   } catch (error) {

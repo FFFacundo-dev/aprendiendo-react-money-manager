@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getGastos, reset } from '../../redux/slices/gastosSlice';
 import Navbar from '../../components/Navbar';
-import GastoForm from '../../components/GastoForm';
+import GastoForm from '../../components/GastosForm';
 import GastosList from '../../components/GastosList';
 
 
