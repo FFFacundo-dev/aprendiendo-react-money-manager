@@ -1,10 +1,10 @@
-// src/App.jsx
+import AppRouter from './router/AppRouter';
 
 function App() {
   return (
-    <div>
-      <h1>Proyecto Money Manager</h1>
-    </div>
+    <>
+      <AppRouter />
+    </>
   );
 }
 
