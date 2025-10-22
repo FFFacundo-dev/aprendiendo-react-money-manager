@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getGastos, reset } from '../../redux/slices/gastosSlice';
 import Navbar from '../../components/Navbar';
@@ -9,6 +9,8 @@ import GastosList from '../../components/GastosList';
 function DashboardPage() {
   const dispatch = useDispatch();
   const { gastos, isLoading, isError, message } = useSelector((state) => state.gastos);
+
+  const [gastoAEditar, setGastoAEditar] = useState(null);
 
   useEffect(() => {
     if (isError) {
@@ -26,8 +28,8 @@ function DashboardPage() {
     <div style={{ width: '100%' }}>
       <Navbar />
       <h1>Dashboard de Gastos</h1>
-      <GastoForm />
-      {isLoading ? <p>Cargando gastos...</p> : <GastosList gastos={gastos} />}
+      <GastoForm gastoAEditar={gastoAEditar} />
+      {isLoading ? <p>Cargando gastos...</p> : <GastosList gastos={gastos} onEditarClick={setGastoAEditar} />}
     </div>
   );
 }

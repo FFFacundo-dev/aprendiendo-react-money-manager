@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createGasto } from '../redux/slices/gastosSlice';
+import { createGasto,updateGasto } from '../redux/slices/gastosSlice';
 
-function GastoForm() {
+function GastoForm({gastoAEditar}) {
   const [formData, setFormData] = useState({
     titulo: '',
     monto: '',
@@ -10,17 +10,33 @@ function GastoForm() {
   const { titulo, monto } = formData;
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (gastoAEditar) {
+      setFormData({
+        titulo: gastoAEditar.titulo,
+        monto: gastoAEditar.monto,
+      });
+    }else{
+      setFormData({
+        titulo: '',
+        monto: '',
+      });
+    }
+  }, [gastoAEditar]);
+
   const onChange = (e) => {
     setFormData((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (!titulo || !monto) {
-      alert('Por favor, complete todos los campos');
+    
+    if (gastoAEditar) {
+      dispatch(updateGasto({ id: gastoAEditar.id_gasto, titulo, monto: parseFloat(monto) }));
       return;
+    }else{
+      dispatch(createGasto({ titulo, monto: parseFloat(monto) }));
     }
-    dispatch(createGasto({ titulo, monto: parseFloat(monto) }));
     setFormData({ titulo: '', monto: '' });
   };
 
